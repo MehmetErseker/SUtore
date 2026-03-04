@@ -18,6 +18,8 @@ const Navbar = () => {
 
   const sidebarRef = useRef(null);
   const sidebarRef2 = useRef(null);
+  const username = localStorage.getItem("username");
+  const isLoggedIn = Boolean(username && username !== "null");
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
@@ -176,13 +178,10 @@ const Navbar = () => {
           ×
         </button>
         <h2>
-          {localStorage.getItem("username") === "null" ||
-          !localStorage.getItem("username")
-            ? "Welcome!"
-            : `Welcome ${localStorage.getItem("username")}!`}
+          {!isLoggedIn ? "Welcome!" : `Welcome ${username}!`}
         </h2>
         <ul className="sidebar-menu2">
-          {localStorage.getItem("username") === "null" && (
+          {!isLoggedIn && (
             <div className="register-login">
               <li>
                 <Link to="/register" onClick={toggleSidebar2}>
@@ -197,8 +196,7 @@ const Navbar = () => {
             </div>
           )}
 
-          {localStorage.getItem("username") !== "null" &&
-            localStorage.getItem("username") && (
+          {isLoggedIn && (
               <div>
                 {localStorage.getItem("role") === "sales_manager" && (
                   <li className="sales-manager">
